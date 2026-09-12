@@ -1,0 +1,17 @@
+# https://ssouyris.github.io/robots.txt
+#
+# This file governs the WHOLE ORIGIN, including every project Pages site
+# on the account, because robots.txt is read only from the origin root
+# (RFC 9309). The personal site should be found; the course slide decks
+# should not.
+#
+# Each course also carries <meta name="robots" content="noindex, nofollow,
+# noarchive"> in the head of every page. Disallow stops the fetch, the
+# meta stops the indexing of a page reached some other way. Keep both.
+#
+# Nothing here restricts access. Anyone with a URL can read any of it.
+
+User-agent: *
+Disallow: /MGMT_4100/
+Disallow: /MGMT_6460/
+Allow: /
