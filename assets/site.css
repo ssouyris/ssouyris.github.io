@@ -298,9 +298,14 @@ em { font-style: italic; }
    It used to read `[aria-current="page"], .is-current`, and NOTHING ON
    THE SITE SET EITHER [measured]: two selectors that matched zero
    elements on all five pages while the marker was really being drawn by
-   the per-page blocks. Nothing sets aria-current even now, which is a
-   real gap for a screen reader; adding it needs markup the shared nav
-   include cannot produce on its own. */
+   the per-page blocks.
+
+   aria-current IS set now, by the script in _includes/foot.html, which
+   finds the marked link by reading this declaration back off the
+   computed style. DELIBERATELY NOT A SELECTOR HERE: if
+   `[aria-current="page"]` also drew the shadow, the script's test would
+   be reading its own output. The attribute is for a screen reader, this
+   declaration is for the eye, and they are kept one-directional. */
 .topbar nav a.is-current {
   box-shadow: inset 0 -3px 0 #fff;
 }

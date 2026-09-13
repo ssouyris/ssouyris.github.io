@@ -629,11 +629,30 @@ Milan Preet Kaur, Ph.D. Industrial and Systems Engineering, RPI, 2025</td>
 </footer>
 
 <!-- ============================================================
-     THE ONLY SCRIPT THIS SITE WRITES. Seven lines, no dependency, no
-     request: it publishes the sticky bar's measured height as
-     --barclear, which site.css adds to the scroll-margin of every
-     linked section so a heading jumped to from the CV index lands below
-     the bar instead of under it.
+     THE ONLY SCRIPT THIS SITE WRITES. Two jobs, no dependency, no
+     request.
+
+     ONE, IT LABELS THE CURRENT PAGE FOR A SCREEN READER. The marker a
+     sighted reader sees is a white underline, drawn in CSS. A screen
+     reader cannot see it, so without a label it reads the four nav
+     links with nothing to separate the page you are on from the three
+     you are not. `aria-current="page"` is that label and it renders
+     nothing.
+
+     IT FINDS THE LINK BY READING THE MARKER RATHER THAN BY MATCHING THE
+     URL. One include serves five pages, so each page draws its own
+     marker with a one-line <style> in its body. A URL map here would be
+     a second copy of that knowledge and would drift: publications.html
+     deliberately marks Research, since Publications has no nav item of
+     its own, and a map would have to know that. Reading the computed
+     inset shadow cannot disagree with what is on screen, because it IS
+     what is on screen. Nothing else in the bar sets an inset shadow
+     [measured: box-shadow appears in one declaration in site.css].
+
+     TWO, IT PUBLISHES THE STICKY BAR'S MEASURED HEIGHT as --barclear,
+     which site.css adds to the scroll-margin of every linked section so
+     a heading jumped to from the CV index lands below the bar instead
+     of under it.
 
      WHY MEASURE RATHER THAN HARDCODE. The bar's height is not a
      function of viewport width. Its five nav items wrap against the
@@ -648,15 +667,26 @@ Milan Preet Kaur, Ph.D. Industrial and Systems Engineering, RPI, 2025</td>
      catches the case a resize listener misses: a font loading late and
      pushing the nav onto a second line after layout has settled.
 
-     IT FAILS SAFE. If the script never runs, the fallback in the CSS
-     (61px, the desktop height) applies and the only cost is a heading
-     under the bar at some narrow widths. Nothing else on the page
-     depends on it.
+     BOTH FAIL SAFE. If the script never runs, the visible marker is
+     unaffected (it is CSS), the aria label is simply absent, and the
+     --barclear fallback in the CSS (61px, the desktop height) applies,
+     so the only cost is a heading landing under the bar at some narrow
+     widths. Nothing on the page depends on this file.
      ============================================================ -->
 <script>
   (function () {
     var bar = document.querySelector('.topbar');
-    if (!bar || !window.ResizeObserver) return;
+    if (!bar) return;
+
+    var links = bar.querySelectorAll('a');
+    for (var i = 0; i < links.length; i++) {
+      if (getComputedStyle(links[i]).boxShadow.indexOf('inset') > -1) {
+        links[i].setAttribute('aria-current', 'page');
+        break;
+      }
+    }
+
+    if (!window.ResizeObserver) return;
     var set = function () {
       document.documentElement.style.setProperty(
         '--barclear', Math.round(bar.getBoundingClientRect().height) + 'px');
