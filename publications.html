@@ -43,12 +43,32 @@ ul.task-list li input[type="checkbox"] {
 <!-- ============================================================
      _includes/head.html
      Wired to `include-in-header` in _quarto.yml, so it reaches all five
-     pages. It carries the one stylesheet and nothing else.
+     pages. It carries the stylesheet, the icons, and the half of the
+     link-preview card that is the same on every page.
 
-     The path is relative and the site is served from the ORIGIN ROOT
+     The paths are relative and the site is served from the ORIGIN ROOT
      (https://ssouyris.github.io/, no repo path prefix), so
      "assets/site.css" resolves from every page. A course site under
      /MGMT_4100/ would need the same care in reverse; this one does not.
+
+     THE OTHER HALF OF THE CARD IS WRITTEN BY og.py, the second
+     post-render step: og:title, og:description and og:url differ per
+     page and are derived there from the page's own <title> and
+     description, so neither is written twice. Everything below is
+     invariant, which is what makes a static include the right place for
+     it.
+
+     og:image IS ABSOLUTE AND HAS TO BE. A crawler is not a browser
+     resolving a relative path against the document; LinkedIn, Slack and
+     X drop a relative og:image silently, which is the usual reason a
+     link renders as a bare grey rectangle. This is the one absolute URL
+     on the site, and it costs no request at page load because nothing
+     but a crawler ever fetches it.
+
+     THE CARD AND THE ICONS ARE BUILT, NOT DRAWN BY HAND:
+     `python3 _design/make-card.py` regenerates all three from the
+     portrait and the palette. Run it when the photograph or the design
+     changes; the outputs are committed.
 
      NO <meta name="robots"> HERE. The course decks carry a noindex meta;
      this site is meant to be found. publish.sh fails if one appears.
@@ -56,7 +76,36 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="assets/site.css">
 <meta name="author" content="Sebastián Souyris">
 
+<!-- The tab mark. A 48-pixel PNG rather than a .ico: every browser in
+     use reads PNG here, and one file at one size is one thing to keep
+     right. apple-touch-icon is the home-screen tile on iOS, which
+     ignores rel="icon" and falls back to a screenshot without it. -->
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 
+<meta property="og:type" content="profile">
+<meta property="og:site_name" content="Sebastián Souyris">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://ssouyris.github.io/assets/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Sebastián Souyris, Assistant Professor of Supply Chain and Analytics at the RPI Lally School of Management">
+
+<!-- summary_large_image is the full-width card. The default, "summary",
+     crops the same file to a small square beside the text and wastes
+     the photograph. -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://ssouyris.github.io/assets/og-card.png">
+<meta name="twitter:image:alt" content="Sebastián Souyris, Assistant Professor of Supply Chain and Analytics at the RPI Lally School of Management">
+
+
+<!-- og.py: generated, do not edit here -->
+<meta property="og:title" content="Publications">
+<meta property="og:description" content="Peer-reviewed journal articles, refereed proceedings and book chapters, working papers, and theses.">
+<meta property="og:url" content="https://ssouyris.github.io/publications.html">
+<meta name="twitter:title" content="Publications">
+<meta name="twitter:description" content="Peer-reviewed journal articles, refereed proceedings and book chapters, working papers, and theses.">
+<!-- /og.py -->
 </head>
 
 <body>
@@ -214,6 +263,44 @@ ul.task-list li input[type="checkbox"] {
     <div>Built with <a href="https://quarto.org/" target="_blank" rel="noopener">Quarto</a>.</div>
   </div>
 </footer>
+
+<!-- ============================================================
+     THE ONLY SCRIPT THIS SITE WRITES. Seven lines, no dependency, no
+     request: it publishes the sticky bar's measured height as
+     --barclear, which site.css adds to the scroll-margin of every
+     linked section so a heading jumped to from the CV index lands below
+     the bar instead of under it.
+
+     WHY MEASURE RATHER THAN HARDCODE. The bar's height is not a
+     function of viewport width. Its five nav items wrap against the
+     brand, so between 320 and 700 pixels the height moves 58, 120, 58,
+     162, 120 and back, flipping every four pixels in places [measured,
+     one render, 96 widths]. A fixed scroll-margin is therefore right at
+     some widths and wrong at others by up to 100 pixels, and no set of
+     media queries fixes a value that is not monotonic in the thing the
+     query tests.
+
+     ResizeObserver fires on the wrap itself, not on resize, so it
+     catches the case a resize listener misses: a font loading late and
+     pushing the nav onto a second line after layout has settled.
+
+     IT FAILS SAFE. If the script never runs, the fallback in the CSS
+     (61px, the desktop height) applies and the only cost is a heading
+     under the bar at some narrow widths. Nothing else on the page
+     depends on it.
+     ============================================================ -->
+<script>
+  (function () {
+    var bar = document.querySelector('.topbar');
+    if (!bar || !window.ResizeObserver) return;
+    var set = function () {
+      document.documentElement.style.setProperty(
+        '--barclear', Math.round(bar.getBoundingClientRect().height) + 'px');
+    };
+    new ResizeObserver(set).observe(bar);
+    set();
+  })();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")

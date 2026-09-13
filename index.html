@@ -43,12 +43,32 @@ ul.task-list li input[type="checkbox"] {
 <!-- ============================================================
      _includes/head.html
      Wired to `include-in-header` in _quarto.yml, so it reaches all five
-     pages. It carries the one stylesheet and nothing else.
+     pages. It carries the stylesheet, the icons, and the half of the
+     link-preview card that is the same on every page.
 
-     The path is relative and the site is served from the ORIGIN ROOT
+     The paths are relative and the site is served from the ORIGIN ROOT
      (https://ssouyris.github.io/, no repo path prefix), so
      "assets/site.css" resolves from every page. A course site under
      /MGMT_4100/ would need the same care in reverse; this one does not.
+
+     THE OTHER HALF OF THE CARD IS WRITTEN BY og.py, the second
+     post-render step: og:title, og:description and og:url differ per
+     page and are derived there from the page's own <title> and
+     description, so neither is written twice. Everything below is
+     invariant, which is what makes a static include the right place for
+     it.
+
+     og:image IS ABSOLUTE AND HAS TO BE. A crawler is not a browser
+     resolving a relative path against the document; LinkedIn, Slack and
+     X drop a relative og:image silently, which is the usual reason a
+     link renders as a bare grey rectangle. This is the one absolute URL
+     on the site, and it costs no request at page load because nothing
+     but a crawler ever fetches it.
+
+     THE CARD AND THE ICONS ARE BUILT, NOT DRAWN BY HAND:
+     `python3 _design/make-card.py` regenerates all three from the
+     portrait and the palette. Run it when the photograph or the design
+     changes; the outputs are committed.
 
      NO <meta name="robots"> HERE. The course decks carry a noindex meta;
      this site is meant to be found. publish.sh fails if one appears.
@@ -56,7 +76,36 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="assets/site.css">
 <meta name="author" content="Sebastián Souyris">
 
+<!-- The tab mark. A 48-pixel PNG rather than a .ico: every browser in
+     use reads PNG here, and one file at one size is one thing to keep
+     right. apple-touch-icon is the home-screen tile on iOS, which
+     ignores rel="icon" and falls back to a screenshot without it. -->
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 
+<meta property="og:type" content="profile">
+<meta property="og:site_name" content="Sebastián Souyris">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://ssouyris.github.io/assets/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Sebastián Souyris, Assistant Professor of Supply Chain and Analytics at the RPI Lally School of Management">
+
+<!-- summary_large_image is the full-width card. The default, "summary",
+     crops the same file to a small square beside the text and wastes
+     the photograph. -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://ssouyris.github.io/assets/og-card.png">
+<meta name="twitter:image:alt" content="Sebastián Souyris, Assistant Professor of Supply Chain and Analytics at the RPI Lally School of Management">
+
+
+<!-- og.py: generated, do not edit here -->
+<meta property="og:title" content="Sebastián Souyris">
+<meta property="og:description" content="Assistant Professor of Supply Chain and Analytics at the Lally School of Management, Rensselaer Polytechnic Institute. Data-driven optimization, machine learning and artificial intelligence for environmental and human sustainability.">
+<meta property="og:url" content="https://ssouyris.github.io/">
+<meta name="twitter:title" content="Sebastián Souyris">
+<meta name="twitter:description" content="Assistant Professor of Supply Chain and Analytics at the Lally School of Management, Rensselaer Polytechnic Institute. Data-driven optimization, machine learning and artificial intelligence for environmental and human sustainability.">
+<!-- /og.py -->
 </head>
 
 <body>
@@ -100,13 +149,13 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 <div class="band">
+  <!-- THREE GRID CHILDREN, not two, and that is what makes the
+       photograph end where the prose does. The text above the chips is
+       its own element, so the image can stretch to exactly that height
+       and no further; with the chips inside the text column the image
+       would have to run past the last line to reach them. -->
   <div class="hero">
-    <!-- width/height are the file's real pixel dimensions, so the
-         browser reserves the right box before the image arrives and the
-         text below does not jump. Change both if the photograph is
-         replaced with one of a different shape. -->
-    <img class="portrait" src="assets/sebastian_souyris_portrait.jpg" alt="Sebastián Souyris" width="1379" height="2048">
-    <div>
+    <div class="hero-text">
       <h1>Sebastián Souyris</h1>
       <p class="role">Assistant Professor of Supply Chain and Analytics<br>
       <a href="https://lally.rpi.edu/" target="_blank" rel="noopener">Lally School of Management</a>,
@@ -125,14 +174,27 @@ ul.task-list li input[type="checkbox"] {
       of the EURO Excellence in Practice Award and of the INFORMS
       Innovative Applications in Analytics Award, and a prizewinner of
       the INFORMS Revenue Management and Pricing Practice Award.</p>
-      <div class="chips">
-        <a href="mailto:souyrs@rpi.edu">souyrs@rpi.edu</a>
-        <a href="https://scholar.google.com/citations?user=FdBsldYAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>
-        <a href="https://orcid.org/0000-0003-3580-8205" target="_blank" rel="noopener">ORCID</a>
-        <a href="https://github.com/ssouyris" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://www.linkedin.com/in/sebastian-souyris/" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="https://rpi.box.com/s/ws2qehr54d5icou5kx9tjodp3u2fgahl" target="_blank" rel="noopener">CV</a>
-      </div>
+    </div>
+
+    <!-- The `width`/`height` attributes are the file's real pixel
+         dimensions, so the browser reserves the right box before the
+         image arrives and nothing jumps. The CSS overrides both; these
+         are the aspect ratio, not the display size.
+
+         820 x 1218 is the web copy that `python3 _design/make-portrait.py`
+         derives from the full-resolution original in `_design/`. The hero
+         draws it 360 CSS pixels wide and `object-fit: cover` scales to
+         the box's full width, so a 2x display needs 720 and 820 leaves
+         margin. Run that script and update these two numbers together. -->
+    <img class="portrait" src="assets/sebastian_souyris_portrait.jpg" alt="Sebastián Souyris" width="820" height="1218">
+
+    <div class="chips">
+      <a href="mailto:souyrs@rpi.edu">souyrs@rpi.edu</a>
+      <a href="https://scholar.google.com/citations?user=FdBsldYAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>
+      <a href="https://orcid.org/0000-0003-3580-8205" target="_blank" rel="noopener">ORCID</a>
+      <a href="https://github.com/ssouyris" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/sebastian-souyris/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://rpi.box.com/s/ws2qehr54d5icou5kx9tjodp3u2fgahl" target="_blank" rel="noopener">CV</a>
     </div>
   </div>
 
@@ -173,25 +235,12 @@ ul.task-list li input[type="checkbox"] {
       </article>
     </div>
   </section>
-
-  <nav class="ways" aria-label="Sections">
-    <a href="research.html">
-      <h3 class="anchored">Research</h3>
-      <p>Four areas and the papers under each.</p>
-    </a>
-    <a href="publications.html">
-      <h3 class="anchored">Publications</h3>
-      <p>Journal articles, proceedings, working papers and theses.</p>
-    </a>
-    <a href="teaching.html">
-      <h3 class="anchored">Teaching</h3>
-      <p>MGMT 4100, 6460 and 6100, with course sites and office hours.</p>
-    </a>
-    <a href="cv.html">
-      <h3 class="anchored">CV and contact</h3>
-      <p>Education, appointments, grants, recognition and press.</p>
-    </a>
-  </nav>
+  <!-- THE PAGE ENDS HERE, ON PURPOSE. A four-block `nav.ways` sat below
+       this section with one card per page. It repeated the top bar, which
+       is on every page and already carries the same four destinations,
+       and it was removed with nothing in its place [Sebastián, Sept 2026].
+       The `.ways` rules went out of site.css with it rather than being
+       left as dead CSS; recover both from git history if wanted. -->
 </div>
 
 </main>
@@ -212,6 +261,44 @@ ul.task-list li input[type="checkbox"] {
     <div>Built with <a href="https://quarto.org/" target="_blank" rel="noopener">Quarto</a>.</div>
   </div>
 </footer>
+
+<!-- ============================================================
+     THE ONLY SCRIPT THIS SITE WRITES. Seven lines, no dependency, no
+     request: it publishes the sticky bar's measured height as
+     --barclear, which site.css adds to the scroll-margin of every
+     linked section so a heading jumped to from the CV index lands below
+     the bar instead of under it.
+
+     WHY MEASURE RATHER THAN HARDCODE. The bar's height is not a
+     function of viewport width. Its five nav items wrap against the
+     brand, so between 320 and 700 pixels the height moves 58, 120, 58,
+     162, 120 and back, flipping every four pixels in places [measured,
+     one render, 96 widths]. A fixed scroll-margin is therefore right at
+     some widths and wrong at others by up to 100 pixels, and no set of
+     media queries fixes a value that is not monotonic in the thing the
+     query tests.
+
+     ResizeObserver fires on the wrap itself, not on resize, so it
+     catches the case a resize listener misses: a font loading late and
+     pushing the nav onto a second line after layout has settled.
+
+     IT FAILS SAFE. If the script never runs, the fallback in the CSS
+     (61px, the desktop height) applies and the only cost is a heading
+     under the bar at some narrow widths. Nothing else on the page
+     depends on it.
+     ============================================================ -->
+<script>
+  (function () {
+    var bar = document.querySelector('.topbar');
+    if (!bar || !window.ResizeObserver) return;
+    var set = function () {
+      document.documentElement.style.setProperty(
+        '--barclear', Math.round(bar.getBoundingClientRect().height) + 'px');
+    };
+    new ResizeObserver(set).observe(bar);
+    set();
+  })();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
