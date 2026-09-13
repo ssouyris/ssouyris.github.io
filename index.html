@@ -35,7 +35,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="index_files/libs/quarto-html/tabby.min.js"></script>
 <script src="index_files/libs/quarto-html/popper.min.js"></script>
 <script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="index_files/libs/quarto-html/anchor.min.js"></script>
 <link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="index_files/libs/quarto-html/quarto-html-640605f58ae58ee79329c070719e555b.min.css" rel="stylesheet" append-hash="true" data-mode="light">
@@ -119,6 +118,23 @@ ul.task-list li input[type="checkbox"] {
          <style>#nav-research{border-bottom-color:var(--rpired)}</style>
      inside its own body block. CSS in the body is valid and applies, and
      it keeps the whole nav in one file.
+
+     THREE ITEMS, NOT FOUR, since September 2026. `Research` and
+     `Publications` were two views of the same dataset: the working
+     papers appeared on both, under different groupings, so every visitor
+     arriving at the bar had to guess which one held what they wanted and
+     the guess cost a page load either way.
+
+     Research keeps the slot because it is the thinking, four areas and
+     the argument for each, which is the thing Google Scholar and SSRN
+     cannot give anyone. publications.html is still published, still
+     indexed, and is reached three ways: a chip at the top of the
+     research page, the home page's selected block, and the CV.
+
+     `#nav-publications` IS DELIBERATELY STILL DEFINED in site.css.
+     publications.html sets it in its own body block, finds nothing in
+     the bar, and marks its parent Research instead, which is where a
+     reader on that page believes they are.
      ============================================================ -->
 <a class="skip" href="#content">Skip to content</a>
 <div class="topbar">
@@ -126,7 +142,6 @@ ul.task-list li input[type="checkbox"] {
     <a class="brand" id="nav-home" href="index.html">Sebastián Souyris</a>
     <nav aria-label="Main">
       <a id="nav-research" href="research.html">Research</a>
-      <a id="nav-publications" href="publications.html">Publications</a>
       <a id="nav-teaching" href="teaching.html">Teaching</a>
       <a id="nav-cv" href="cv.html">CV</a>
     </nav>
@@ -144,8 +159,14 @@ ul.task-list li input[type="checkbox"] {
   /* The brand IS the home link, so the home page marks itself there
      rather than on a nav item that does not exist. A border-bottom
      would collide with the bar's own 4px red rule, so this is an
-     inset shadow sitting just above it. */
-  #nav-home { box-shadow: inset 0 -3px 0 var(--rpired); }
+     inset shadow sitting just above it.
+
+     WHITE, not red, since 13 September 2026. The mechanism here was
+     always right and the four nav items copied the wrong one for a
+     month; when they were fixed, the colour was measured too. Red on
+     the navy bar is 1.99:1, under the 3:1 a state indicator wants.
+     White is 10.77:1 and matches the type it sits beneath. */
+  #nav-home { box-shadow: inset 0 -3px 0 #fff; }
 </style>
 
 <div class="band">
@@ -198,17 +219,80 @@ ul.task-list li input[type="checkbox"] {
     </div>
   </div>
 
+  <!-- SELECTED PUBLICATIONS SITS ABOVE THE CURRENT BLOCK, ON PURPOSE,
+       and it is one paper for each of the four journals the bio names
+       one paragraph higher. Until September 2026 the front page made
+       that claim and linked to nothing: 217 words, 15 links, zero
+       citations [measured]. A dean or an editor who read one screen and
+       left had seen an assertion and no evidence.
+
+       WHY ABOVE RATHER THAN BELOW. The page is meant to END on the
+       current block, which is the decision that removed the four
+       navigation cards. Putting the record between the bio and the
+       current work keeps that ending, and it reads in the right order
+       anyway: the sentence, then its evidence, then what is next.
+
+       THE LEFT COLUMN IS THE JOURNAL, not the year. In the block below
+       it the year leads, because a project is placed in time. A paper is
+       placed by where it appeared, so the column reads down as
+       Operations Research, POM, EJOR, INFORMS Journal on Applied
+       Analytics, which is the credential doing its own work.
+
+       Titles are exact and unabbreviated: an editor arriving here is
+       checking one against a reference list. Author lists are cut to the
+       coauthors, since the whole page is his. Every DOI on this block is
+       the Crossref-resolved one, the same string publications.html
+       carries; the two have to stay in step. -->
+  <section class="sec">
+    <h2>Selected publications</h2>
+    <div class="now now-pubs">
+      <article>
+        <div class="when"><em>Operations Research</em>2023</div>
+        <div>
+          <h3>Scheduling Advertising on Cable Television</h3><span class="mark"><a href="https://www.informs.org/Recognizing-Excellence/Community-Prizes/Revenue-Management-and-Pricing/Revenue-Management-and-Pricing-Practice-Award" target="_blank" rel="noopener">First prize, INFORMS RM&amp;P 2022</a></span>
+          <p>With Seshadri and Subramanian. 71(6), 2217–2231.</p>
+          <span class="doi"><a href="https://doi.org/10.1287/opre.2022.2430" target="_blank" rel="noopener">https://doi.org/10.1287/opre.2022.2430</a></span>
+        </div>
+      </article>
+      <article>
+        <div class="when"><em>Production and Operations Management</em>2023</div>
+        <div>
+          <h3>Informational value of visual nudges during crises: Improving public health outcomes through social media engagement amid COVID-19</h3>
+          <p>With Ivanov, Tacheva, Alzaidan and England. 32, 2400–2419.</p>
+          <span class="doi"><a href="https://doi.org/10.1111/poms.13982" target="_blank" rel="noopener">https://doi.org/10.1111/poms.13982</a></span>
+        </div>
+      </article>
+      <article>
+        <div class="when"><em>INFORMS Journal on Applied Analytics</em>2017</div>
+        <div>
+          <h3>Operations Research Transforms the Scheduling of Chilean Soccer Leagues and South American World Cup Qualifiers</h3><span class="mark"><a href="https://www.informs.org/Recognizing-Excellence/INFORMS-Prizes/Franz-Edelman-Award/Franz-Edelman-Laureates2/Franz-Edelman-Laureates-Class-of-2016" target="_blank" rel="noopener">Edelman finalist 2016</a></span>
+          <p>With Alarcón, Saure, Weintraub and others. 47, 52–69.</p>
+          <span class="doi"><a href="https://doi.org/10.1287/inte.2016.0861" target="_blank" rel="noopener">https://doi.org/10.1287/inte.2016.0861</a></span>
+        </div>
+      </article>
+      <article>
+        <div class="when"><em>European Journal of Operational Research</em>2014</div>
+        <div>
+          <h3>Branch-and-Price and Constraint Programming for Solving a Real-Life Technician Dispatching Problem</h3>
+          <p>With Cortés, Gendreau, Rousseau and Weintraub. 238(1), 300–312.</p>
+          <span class="doi"><a href="https://doi.org/10.1016/j.ejor.2014.03.006" target="_blank" rel="noopener">https://doi.org/10.1016/j.ejor.2014.03.006</a></span>
+        </div>
+      </article>
+    </div>
+    <p class="more"><a href="publications.html">The complete list</a>, in four groups.</p>
+  </section>
+
   <!-- The one part of the site that goes stale on its own, so it is
        three hand-written entries rather than a generated listing: a
        listing page would need its own JS and CSS and would be the only
        thing here reaching outside itself. -->
   <section class="sec">
-    <h2 class="anchored">Current research and working papers</h2>
+    <h2>Current research and working papers</h2>
     <div class="now">
       <article>
         <div class="when">2026<em><a href="https://www.fcatalyst.com/university-awards" target="_blank" rel="noopener">FCAT</a> · PI</em></div>
         <div>
-          <h3 class="anchored">Closing the retirement-savings gap</h3>
+          <h3>Closing the retirement-savings gap</h3>
           <p>Behavioural heterogeneity meets conversational AI: a
           personalized agent for retirement-savings decisions. Fidelity
           Center for Applied Technology University Research Award.</p>
@@ -217,7 +301,7 @@ ul.task-list li input[type="checkbox"] {
       <article>
         <div class="when">2025<em><a href="https://www.stevens.edu/craft" target="_blank" rel="noopener">CRAFT</a> · PI</em></div>
         <div>
-          <h3 class="anchored">Drivers of volatility in energy commodity markets</h3>
+          <h3>Drivers of volatility in energy commodity markets</h3>
           <p>Identifying what moves volatility in energy commodities,
           with the Center for Research toward Advancing Financial
           Technologies at Stevens and RPI.</p>
@@ -226,7 +310,7 @@ ul.task-list li input[type="checkbox"] {
       <article>
         <div class="when">Major revision<em><a href="https://pubsonline.informs.org/journal/msom" target="_blank" rel="noopener">M&amp;SOM</a></em></div>
         <div>
-          <h3 class="anchored">Accelerating residential solar adoption</h3>
+          <h3>Accelerating residential solar adoption</h3>
           <p>A dynamic structural model of the household adoption
           decision, used to compare rebate designs. A rebate offered for
           a limited period generates more adoption than a prolonged,
@@ -305,13 +389,6 @@ ul.task-list li input[type="checkbox"] {
     tabsets.forEach(function(tabset) {
       const tabby = new Tabby('#' + tabset.id);
     });
-    const icon = "";
-    const anchorJS = new window.AnchorJS();
-    anchorJS.options = {
-      placement: 'right',
-      icon: icon
-    };
-    anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
         if (clz.startsWith('code-annotation-')) {                     

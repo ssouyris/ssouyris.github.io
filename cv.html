@@ -35,7 +35,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="cv_files/libs/quarto-html/tabby.min.js"></script>
 <script src="cv_files/libs/quarto-html/popper.min.js"></script>
 <script src="cv_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="cv_files/libs/quarto-html/anchor.min.js"></script>
 <link href="cv_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="cv_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="cv_files/libs/quarto-html/quarto-html-640605f58ae58ee79329c070719e555b.min.css" rel="stylesheet" append-hash="true" data-mode="light">
@@ -119,6 +118,23 @@ ul.task-list li input[type="checkbox"] {
          <style>#nav-research{border-bottom-color:var(--rpired)}</style>
      inside its own body block. CSS in the body is valid and applies, and
      it keeps the whole nav in one file.
+
+     THREE ITEMS, NOT FOUR, since September 2026. `Research` and
+     `Publications` were two views of the same dataset: the working
+     papers appeared on both, under different groupings, so every visitor
+     arriving at the bar had to guess which one held what they wanted and
+     the guess cost a page load either way.
+
+     Research keeps the slot because it is the thinking, four areas and
+     the argument for each, which is the thing Google Scholar and SSRN
+     cannot give anyone. publications.html is still published, still
+     indexed, and is reached three ways: a chip at the top of the
+     research page, the home page's selected block, and the CV.
+
+     `#nav-publications` IS DELIBERATELY STILL DEFINED in site.css.
+     publications.html sets it in its own body block, finds nothing in
+     the bar, and marks its parent Research instead, which is where a
+     reader on that page believes they are.
      ============================================================ -->
 <a class="skip" href="#content">Skip to content</a>
 <div class="topbar">
@@ -126,7 +142,6 @@ ul.task-list li input[type="checkbox"] {
     <a class="brand" id="nav-home" href="index.html">Sebastián Souyris</a>
     <nav aria-label="Main">
       <a id="nav-research" href="research.html">Research</a>
-      <a id="nav-publications" href="publications.html">Publications</a>
       <a id="nav-teaching" href="teaching.html">Teaching</a>
       <a id="nav-cv" href="cv.html">CV</a>
     </nav>
@@ -140,13 +155,19 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<style>#nav-cv{border-bottom-color:var(--rpired)}</style>
+<style>#nav-cv{box-shadow:inset 0 -3px 0 #fff}</style>
 
 <div class="band">
   <div class="pagehead">
     <h1>CV and contact</h1>
     <div class="chips">
       <a href="https://rpi.box.com/s/ws2qehr54d5icou5kx9tjodp3u2fgahl" target="_blank" rel="noopener">Curriculum vitae [pdf]</a>
+      <!-- publications.html left the nav bar in September 2026, so every
+           page that a reader can plausibly be on when they want the full
+           list has to offer it. This page lists grants, awards and press
+           and names no paper, which makes it the likeliest place to want
+           one. -->
+      <a href="publications.html">All publications</a>
     </div>
   </div>
 
@@ -175,7 +196,7 @@ ul.task-list li input[type="checkbox"] {
   </nav>
 
   <section class="sec" id="about">
-    <h2 class="anchored">About</h2>
+    <h2>About</h2>
     <p class="lede">Sebastián Souyris is an Assistant Professor of
     Supply Chain and Analytics at the RPI Lally School of Management. His
     research addresses challenges and the means of achieving
@@ -204,7 +225,7 @@ ul.task-list li input[type="checkbox"] {
   </section>
 
   <section class="sec" id="education">
-    <h2 class="anchored">Education</h2>
+    <h2>Education</h2>
     
 <table class="rows caption-top">
 <colgroup>
@@ -238,7 +259,7 @@ ul.task-list li input[type="checkbox"] {
   </section>
 
   <section class="sec" id="academic">
-    <h2 class="anchored">Academic appointments</h2>
+    <h2>Academic appointments</h2>
     
 <table class="rows caption-top">
 <colgroup>
@@ -281,7 +302,7 @@ Research Assistant, 2003 to 2006</span></td>
   </section>
 
   <section class="sec" id="industry">
-    <h2 class="anchored">Industry appointments</h2>
+    <h2>Industry appointments</h2>
     
 <table class="rows caption-top">
 <colgroup>
@@ -311,7 +332,7 @@ Optimization Scientist, 2009 to 2010</span></td>
   </section>
 
   <section class="sec" id="affiliations">
-    <h2 class="anchored">Affiliations</h2>
+    <h2>Affiliations</h2>
     
 <table class="rows caption-top">
 <colgroup>
@@ -336,7 +357,7 @@ Optimization Scientist, 2009 to 2010</span></td>
   </section>
 
   <section class="sec" id="honors">
-    <h2 class="anchored">Honors and awards</h2>
+    <h2>Honors and awards</h2>
     
 <table class="rows caption-top">
 <tbody>
@@ -370,7 +391,7 @@ Optimization Scientist, 2009 to 2010</span></td>
   </section>
 
   <section class="sec" id="grants">
-    <h2 class="anchored">Grants and fellowships</h2>
+    <h2>Grants and fellowships</h2>
     
 <table class="rows caption-top">
 <tbody>
@@ -432,7 +453,7 @@ Optimization Scientist, 2009 to 2010</span></td>
   </section>
 
   <section class="sec" id="service">
-    <h2 class="anchored">Service and advising</h2>
+    <h2>Service and advising</h2>
     
 <table class="rows caption-top">
 <colgroup>
@@ -467,7 +488,7 @@ Milan Preet Kaur, Ph.D. Industrial and Systems Engineering, RPI, 2025</td>
   </section>
 
   <section class="sec" id="media">
-    <h2 class="anchored">In the media</h2>
+    <h2>In the media</h2>
     
 <table class="rows caption-top">
 <tbody>
@@ -549,7 +570,7 @@ Milan Preet Kaur, Ph.D. Industrial and Systems Engineering, RPI, 2025</td>
   </section>
 
   <section class="sec" id="contact">
-    <h2 class="anchored">Contact</h2>
+    <h2>Contact</h2>
     
 <table class="rows caption-top">
 <tbody>
@@ -653,13 +674,6 @@ Milan Preet Kaur, Ph.D. Industrial and Systems Engineering, RPI, 2025</td>
     tabsets.forEach(function(tabset) {
       const tabby = new Tabby('#' + tabset.id);
     });
-    const icon = "";
-    const anchorJS = new window.AnchorJS();
-    anchorJS.options = {
-      placement: 'right',
-      icon: icon
-    };
-    anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
         if (clz.startsWith('code-annotation-')) {                     

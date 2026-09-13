@@ -35,7 +35,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="teaching_files/libs/quarto-html/tabby.min.js"></script>
 <script src="teaching_files/libs/quarto-html/popper.min.js"></script>
 <script src="teaching_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="teaching_files/libs/quarto-html/anchor.min.js"></script>
 <link href="teaching_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="teaching_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="teaching_files/libs/quarto-html/quarto-html-640605f58ae58ee79329c070719e555b.min.css" rel="stylesheet" append-hash="true" data-mode="light">
@@ -119,6 +118,23 @@ ul.task-list li input[type="checkbox"] {
          <style>#nav-research{border-bottom-color:var(--rpired)}</style>
      inside its own body block. CSS in the body is valid and applies, and
      it keeps the whole nav in one file.
+
+     THREE ITEMS, NOT FOUR, since September 2026. `Research` and
+     `Publications` were two views of the same dataset: the working
+     papers appeared on both, under different groupings, so every visitor
+     arriving at the bar had to guess which one held what they wanted and
+     the guess cost a page load either way.
+
+     Research keeps the slot because it is the thinking, four areas and
+     the argument for each, which is the thing Google Scholar and SSRN
+     cannot give anyone. publications.html is still published, still
+     indexed, and is reached three ways: a chip at the top of the
+     research page, the home page's selected block, and the CV.
+
+     `#nav-publications` IS DELIBERATELY STILL DEFINED in site.css.
+     publications.html sets it in its own body block, finds nothing in
+     the bar, and marks its parent Research instead, which is where a
+     reader on that page believes they are.
      ============================================================ -->
 <a class="skip" href="#content">Skip to content</a>
 <div class="topbar">
@@ -126,7 +142,6 @@ ul.task-list li input[type="checkbox"] {
     <a class="brand" id="nav-home" href="index.html">Sebastián Souyris</a>
     <nav aria-label="Main">
       <a id="nav-research" href="research.html">Research</a>
-      <a id="nav-publications" href="publications.html">Publications</a>
       <a id="nav-teaching" href="teaching.html">Teaching</a>
       <a id="nav-cv" href="cv.html">CV</a>
     </nav>
@@ -140,7 +155,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<style>#nav-teaching{border-bottom-color:var(--rpired)}</style>
+<style>#nav-teaching{box-shadow:inset 0 -3px 0 #fff}</style>
 
 <div class="band">
   <div class="pagehead">
@@ -150,7 +165,7 @@ ul.task-list li input[type="checkbox"] {
   </div>
 
   <section class="sec">
-    <h2 class="anchored">Courses</h2>
+    <h2>Courses</h2>
     
 <table class="rows caption-top">
 <colgroup>
@@ -245,13 +260,6 @@ ul.task-list li input[type="checkbox"] {
     tabsets.forEach(function(tabset) {
       const tabby = new Tabby('#' + tabset.id);
     });
-    const icon = "";
-    const anchorJS = new window.AnchorJS();
-    anchorJS.options = {
-      placement: 'right',
-      icon: icon
-    };
-    anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
         if (clz.startsWith('code-annotation-')) {                     

@@ -35,7 +35,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="publications_files/libs/quarto-html/tabby.min.js"></script>
 <script src="publications_files/libs/quarto-html/popper.min.js"></script>
 <script src="publications_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="publications_files/libs/quarto-html/anchor.min.js"></script>
 <link href="publications_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="publications_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="publications_files/libs/quarto-html/quarto-html-640605f58ae58ee79329c070719e555b.min.css" rel="stylesheet" append-hash="true" data-mode="light">
@@ -119,6 +118,23 @@ ul.task-list li input[type="checkbox"] {
          <style>#nav-research{border-bottom-color:var(--rpired)}</style>
      inside its own body block. CSS in the body is valid and applies, and
      it keeps the whole nav in one file.
+
+     THREE ITEMS, NOT FOUR, since September 2026. `Research` and
+     `Publications` were two views of the same dataset: the working
+     papers appeared on both, under different groupings, so every visitor
+     arriving at the bar had to guess which one held what they wanted and
+     the guess cost a page load either way.
+
+     Research keeps the slot because it is the thinking, four areas and
+     the argument for each, which is the thing Google Scholar and SSRN
+     cannot give anyone. publications.html is still published, still
+     indexed, and is reached three ways: a chip at the top of the
+     research page, the home page's selected block, and the CV.
+
+     `#nav-publications` IS DELIBERATELY STILL DEFINED in site.css.
+     publications.html sets it in its own body block, finds nothing in
+     the bar, and marks its parent Research instead, which is where a
+     reader on that page believes they are.
      ============================================================ -->
 <a class="skip" href="#content">Skip to content</a>
 <div class="topbar">
@@ -126,7 +142,6 @@ ul.task-list li input[type="checkbox"] {
     <a class="brand" id="nav-home" href="index.html">Sebastián Souyris</a>
     <nav aria-label="Main">
       <a id="nav-research" href="research.html">Research</a>
-      <a id="nav-publications" href="publications.html">Publications</a>
       <a id="nav-teaching" href="teaching.html">Teaching</a>
       <a id="nav-cv" href="cv.html">CV</a>
     </nav>
@@ -140,20 +155,43 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<style>#nav-publications{border-bottom-color:var(--rpired)}</style>
+<!-- THIS PAGE IS NO LONGER IN THE NAV BAR, so it marks Research, its
+     parent, instead. `#nav-publications` matches nothing in the bar and
+     is left here only so the pattern every other page follows stays
+     visible. A reader who arrived from the research page believes they
+     are still under Research, and they are. -->
+<style>#nav-research{box-shadow:inset 0 -3px 0 #fff}</style>
 
 <div class="band">
   <div class="pagehead">
     <h1>Publications</h1>
+    <p class="stand">Every journal article, proceeding, chapter, working
+    paper and thesis, in four groups. The four areas each of these sits
+    under are on the <a href="research.html">research page</a>.</p>
     <div class="chips">
+      <a href="research.html">← Research</a>
       <a href="https://scholar.google.com/citations?user=FdBsldYAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>
       <a href="https://orcid.org/0000-0003-3580-8205" target="_blank" rel="noopener">ORCID</a>
       <a href="https://rpi.box.com/s/ws2qehr54d5icou5kx9tjodp3u2fgahl" target="_blank" rel="noopener">Curriculum vitae [pdf]</a>
     </div>
   </div>
 
-  <section class="sec">
-    <h2 class="anchored">Peer-reviewed journal articles</h2>
+  <!-- FOUR GROUPS OVER 3.6 SCREENS, and the one a peer usually wants is
+       the third. The CV page's index component, reused verbatim: a
+       labelled row of anchors in the site's pill shape, with an `id` on
+       every section and the scroll-margin that clears the sticky bar. -->
+  <nav class="jumps" aria-label="Sections on this page">
+    <span class="eyebrow">On this page</span>
+    <div class="chips">
+      <a href="#articles">Journal articles</a>
+      <a href="#proceedings">Proceedings and chapters</a>
+      <a href="#working">Working papers</a>
+      <a href="#theses">Theses</a>
+    </div>
+  </nav>
+
+  <section class="sec" id="articles">
+    <h2>Peer-reviewed journal articles</h2>
     <ul class="pubs">
       <li><span class="pt">Sustainable Operations Management in the Energy Sector: A Comprehensive Review of the Literature from 2000 to 2024</span>
         <span class="pv">Losada-Agudelo &amp; Souyris. <em>Sustainability</em> 16(18), 7999, 2024.</span>
@@ -188,8 +226,8 @@ ul.task-list li input[type="checkbox"] {
     </ul>
   </section>
 
-  <section class="sec">
-    <h2 class="anchored">Refereed proceedings and book chapters</h2>
+  <section class="sec" id="proceedings">
+    <h2>Refereed proceedings and book chapters</h2>
     <ul class="pubs">
       <li><span class="pt">Testing as a Control Mechanism for Emerging Epidemics</span>
         <span class="pv">Mukherjee, Souyris &amp; Ivanov. <em>Foundations and Trends in Technology, Information and Operations Management</em> 19(2-3), 277–328, 2025.</span>
@@ -207,8 +245,8 @@ ul.task-list li input[type="checkbox"] {
     </ul>
   </section>
 
-  <section class="sec">
-    <h2 class="anchored">Working papers and work in progress</h2>
+  <section class="sec" id="working">
+    <h2>Working papers and work in progress</h2>
     <ul class="pubs">
       <li><span class="pt">Accelerating the Adoption of Residential Solar Power Systems: Policy Analysis using a Dynamic Structural Model</span>
         <span class="pv">Souyris, Duan, Balakrishnan &amp; Rai.</span>
@@ -230,8 +268,8 @@ ul.task-list li input[type="checkbox"] {
     </ul>
   </section>
 
-  <section class="sec">
-    <h2 class="anchored">Theses and other writing</h2>
+  <section class="sec" id="theses">
+    <h2>Theses and other writing</h2>
     <ul class="pubs">
       <li><span class="pt">Models to Predict and Influence Consumer Demand: Applications to Television Advertising and Solar Panel Adoption</span>
         <span class="pv">Souyris. Ph.D. dissertation, The University of Texas at Austin, 2019. Advisors: Anant Balakrishnan and Jason Duan.</span></li>
@@ -307,13 +345,6 @@ ul.task-list li input[type="checkbox"] {
     tabsets.forEach(function(tabset) {
       const tabby = new Tabby('#' + tabset.id);
     });
-    const icon = "";
-    const anchorJS = new window.AnchorJS();
-    anchorJS.options = {
-      placement: 'right',
-      icon: icon
-    };
-    anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
         if (clz.startsWith('code-annotation-')) {                     

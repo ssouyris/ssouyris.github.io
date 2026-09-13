@@ -35,7 +35,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="research_files/libs/quarto-html/tabby.min.js"></script>
 <script src="research_files/libs/quarto-html/popper.min.js"></script>
 <script src="research_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="research_files/libs/quarto-html/anchor.min.js"></script>
 <link href="research_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="research_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="research_files/libs/quarto-html/quarto-html-640605f58ae58ee79329c070719e555b.min.css" rel="stylesheet" append-hash="true" data-mode="light">
@@ -119,6 +118,23 @@ ul.task-list li input[type="checkbox"] {
          <style>#nav-research{border-bottom-color:var(--rpired)}</style>
      inside its own body block. CSS in the body is valid and applies, and
      it keeps the whole nav in one file.
+
+     THREE ITEMS, NOT FOUR, since September 2026. `Research` and
+     `Publications` were two views of the same dataset: the working
+     papers appeared on both, under different groupings, so every visitor
+     arriving at the bar had to guess which one held what they wanted and
+     the guess cost a page load either way.
+
+     Research keeps the slot because it is the thinking, four areas and
+     the argument for each, which is the thing Google Scholar and SSRN
+     cannot give anyone. publications.html is still published, still
+     indexed, and is reached three ways: a chip at the top of the
+     research page, the home page's selected block, and the CV.
+
+     `#nav-publications` IS DELIBERATELY STILL DEFINED in site.css.
+     publications.html sets it in its own body block, finds nothing in
+     the bar, and marks its parent Research instead, which is where a
+     reader on that page believes they are.
      ============================================================ -->
 <a class="skip" href="#content">Skip to content</a>
 <div class="topbar">
@@ -126,7 +142,6 @@ ul.task-list li input[type="checkbox"] {
     <a class="brand" id="nav-home" href="index.html">Sebastián Souyris</a>
     <nav aria-label="Main">
       <a id="nav-research" href="research.html">Research</a>
-      <a id="nav-publications" href="publications.html">Publications</a>
       <a id="nav-teaching" href="teaching.html">Teaching</a>
       <a id="nav-cv" href="cv.html">CV</a>
     </nav>
@@ -140,7 +155,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<style>#nav-research{border-bottom-color:var(--rpired)}</style>
+<style>#nav-research{box-shadow:inset 0 -3px 0 #fff}</style>
 
 <div class="band">
   <div class="pagehead">
@@ -148,10 +163,29 @@ ul.task-list li input[type="checkbox"] {
     <p class="stand">Data-driven optimization, machine learning and
     artificial intelligence, applied to problems in energy, health,
     media and logistics.</p>
+    <!-- THE ONLY DOOR TO publications.html FROM THE BAR, since the nav
+         went to three items in September 2026. It is first in the row
+         and it is an internal link, so it carries no target or rel. -->
+    <div class="chips">
+      <a href="publications.html">All publications</a>
+      <a href="https://scholar.google.com/citations?user=FdBsldYAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>
+      <a href="https://orcid.org/0000-0003-3580-8205" target="_blank" rel="noopener">ORCID</a>
+      <a href="https://rpi.box.com/s/ws2qehr54d5icou5kx9tjodp3u2fgahl" target="_blank" rel="noopener">Curriculum vitae [pdf]</a>
+    </div>
   </div>
 
-  <section class="sec">
-    <h2 class="anchored">Energy and sustainability</h2>
+  <nav class="jumps" aria-label="Sections on this page">
+    <span class="eyebrow">On this page</span>
+    <div class="chips">
+      <a href="#energy">Energy</a>
+      <a href="#health">Health</a>
+      <a href="#media">Media</a>
+      <a href="#logistics">Logistics</a>
+    </div>
+  </nav>
+
+  <section class="sec" id="energy">
+    <h2>Energy and sustainability</h2>
     <p class="lede">Policy design for household adoption of clean energy,
     volatility in energy commodity markets, and incentive design in
     agricultural supply chains.</p>
@@ -170,8 +204,8 @@ ul.task-list li input[type="checkbox"] {
     </ul>
   </section>
 
-  <section class="sec">
-    <h2 class="anchored">Health systems under stress</h2>
+  <section class="sec" id="health">
+    <h2>Health systems under stress</h2>
     <p class="lede">Testing and lock-down as control mechanisms for
     emerging epidemics, consent design in school testing programmes, and
     the effect of public health messaging on behaviour.</p>
@@ -199,8 +233,8 @@ ul.task-list li input[type="checkbox"] {
     </ul>
   </section>
 
-  <section class="sec">
-    <h2 class="anchored">Media and revenue management</h2>
+  <section class="sec" id="media">
+    <h2>Media and revenue management</h2>
     <p class="lede">Scheduling and inventory optimization for television
     advertising, deployed at national networks.</p>
     <ul class="pubs">
@@ -216,8 +250,8 @@ ul.task-list li input[type="checkbox"] {
     </ul>
   </section>
 
-  <section class="sec">
-    <h2 class="anchored">Logistics and scheduling</h2>
+  <section class="sec" id="logistics">
+    <h2>Logistics and scheduling</h2>
     <p class="lede">Robust optimization, branch-and-price and constraint
     programming for technician dispatching under uncertainty, and integer
     programming for national league fixtures.</p>
@@ -239,11 +273,11 @@ ul.task-list li input[type="checkbox"] {
     </ul>
   </section>
 
-  <section class="sec">
-    <h2 class="anchored">Complete list</h2>
-    <p><a href="publications.html">All publications</a>.
-    <a href="cv.html">Grants, awards</a>.</p>
-  </section>
+  <!-- THE "COMPLETE LIST" SECTION WAS HERE AND IS GONE. It held two
+       links, one of which is now the first chip at the top of the page
+       and the other of which the nav bar carries. A closing section
+       whose whole content is two links the reader has already passed is
+       a footer pretending to be a section. -->
 </div>
 
 </main>
@@ -308,13 +342,6 @@ ul.task-list li input[type="checkbox"] {
     tabsets.forEach(function(tabset) {
       const tabby = new Tabby('#' + tabset.id);
     });
-    const icon = "";
-    const anchorJS = new window.AnchorJS();
-    anchorJS.options = {
-      placement: 'right',
-      icon: icon
-    };
-    anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
         if (clz.startsWith('code-annotation-')) {                     

@@ -125,17 +125,74 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
-/* LINKS CARRY NO UNDERLINE AT REST. The colour separates them from the
-   body text; the underline arrives on hover, which is where a reader
-   asks the question "is this clickable?". The CV page alone holds forty
-   links inside tables, and underlining them all at rest turned the page
-   into a field of rules. */
+/* LINKS CARRY NO UNDERLINE AT REST, with one scoped exception below.
+   The colour separates them from the body text; the underline arrives on
+   hover, which is where a reader asks "is this clickable?". The CV page
+   alone holds forty links inside tables, and underlining them all at rest
+   turned the page into a field of rules. */
 a { color: var(--deckblue); text-decoration: none; }
 a:hover, a:focus {
   color: var(--rpired);
   text-decoration: underline; text-decoration-thickness: 1px;
   text-underline-offset: 2px;
 }
+
+/* ------------------------------------------------------------
+   THE EXCEPTION, AND IT IS A CONFORMANCE REQUIREMENT RATHER THAN A
+   PREFERENCE. WCAG 1.4.1 Use of Color, Level A: colour may not be the
+   only way a link is distinguished from the text around it. The
+   threshold for identifying something by colour alone is 3:1 against
+   its surroundings.
+
+   Measured: --deckblue #1D4158 against --ink #23373B is 1.16:1. A
+   reader with deuteranopia sees an unbroken run of text.
+
+   NO BLUE FIXES THIS. The whole range was walked against both the body
+   colour and the ground [measured]:
+
+       link        vs body text    vs paper
+       #1D4158       1.16            10.32   (current)
+       #15406B       1.18            10.17
+       #1257A0       1.72             6.95
+       #0B5CA8       1.85             6.47   (already too bright for the page)
+
+   Every value approaching 3:1 against the ink loses its contrast against
+   the paper. A non-colour cue is the only conformant option, so the 37
+   links that sit inside a sentence get one.
+
+   SCOPE IS THE WHOLE DESIGN OF THIS RULE. A link that is the entire
+   content of a chip, a nav item, a .doi line or a table cell is
+   identified by position, the same way a menu item is, and stays bare.
+   Only a link with text running either side of it is ambiguous. That is
+   17 of the CV's links rather than all forty, which is what the original
+   objection was about.
+
+   The underline is set at 30% alpha and pushed 3px clear of the
+   baseline, which is how the FT and the NYT set in-body links: present
+   to the eye, quiet enough not to read as a rule. On hover it goes to
+   full strength along with the colour change.
+   ------------------------------------------------------------ */
+.hero .role a,
+main p a,
+main .lede a,
+table.rows td a,
+.now .when a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgba(29, 65, 88, .30);
+  text-underline-offset: 3px;
+}
+.hero .role a:hover, .hero .role a:focus,
+main p a:hover, main p a:focus,
+main .lede a:hover, main .lede a:focus,
+table.rows td a:hover, table.rows td a:focus,
+.now .when a:hover, .now .when a:focus {
+  text-decoration-color: currentColor;
+}
+
+/* The DOI line is handled where it is defined, further down: it already
+   uses a border-bottom rather than text-decoration, for a reason given
+   there, so its rest state is set on that border instead. */
 em { font-style: italic; }
 
 /* The skip link is invisible until a keyboard lands on it. Every page
@@ -178,9 +235,30 @@ em { font-style: italic; }
 .topbar nav a:hover, .topbar nav a:focus {
   color: #fff; background: rgba(255,255,255,.09);
 }
-/* Each page marks its own item current, in a <style> block in the page,
-   because include-before-body serves one nav file to all five. */
-.topbar nav a[aria-current="page"] { border-bottom-color: var(--rpired); }
+/* THE CURRENT-PAGE MARKER, and it was invisible on every page from the
+   first render until 13 September 2026.
+
+   Each page marks its own item in a <style> block in its own body,
+   because include-before-body serves one nav file to all five, and the
+   declaration it wrote was `border-bottom-color: var(--rpired)`. The nav
+   item's border-bottom is 3px with `margin-bottom: -3px`, so it lands at
+   y 57-60. The bar's own rule is 4px of the SAME RED at y 57-61
+   [measured]. The marker was painted inside the rule, red on red,
+   1.00:1. Nothing was ever shown.
+
+   index.qmd already knew this. Its comment says a border-bottom "would
+   collide with the bar's own 4px red rule, so this is an inset shadow
+   sitting just above it", and the brand marker has been a box-shadow
+   since day one. The reasoning was never carried across to the nav.
+
+   So the nav uses the brand's mechanism, with one change: WHITE rather
+   than red. An inset shadow paints inside the link's own box, which is
+   navy, and red on navy is 1.99:1 against the 3:1 a state indicator
+   wants. White is 10.77:1 and matches the type it sits under. */
+.topbar nav a[aria-current="page"],
+.topbar nav a.is-current {
+  box-shadow: inset 0 -3px 0 #fff;
+}
 
 /* ------------------------------------------------------------
    Page furniture
@@ -407,7 +485,45 @@ section.sec[id] { scroll-margin-top: calc(var(--barclear, 61px) + 18px); }
 .now .when a:hover, .now .when a:focus { color: var(--rpired); }
 .now h3 { margin: 0; font-size: 1.06rem; color: var(--deckblue);
   font-weight: 600; line-height: 1.32; }
-.now p { margin: 6px 0 0; font-size: .95rem; color: #3d5361; max-width: 72ch; }
+/* 66ch, down from 72. 72 characters is past the ceiling where the eye
+   starts losing its place on the line return. */
+.now p { margin: 6px 0 0; font-size: .95rem; color: #3d5361; max-width: 66ch; }
+
+/* THE SELECTED-PUBLICATIONS VARIANT. Same rows, one thing inverted: the
+   gutter leads with the journal rather than the year, because a paper is
+   placed by where it appeared and a project is placed in time. Read down
+   the column and it says Operations Research, POM, INFORMS Journal on
+   Applied Analytics, EJOR, which is the front page's argument set as a
+   list.
+
+   The journal is italic and takes the weight; the year drops to the
+   muted second line the funder occupies in the block below. Journal
+   names run long, so this column wraps to two and three lines by design,
+   and the tightened line-height keeps a wrap from reading as two
+   separate entries. */
+.now-pubs .when em {
+  display: block; font-style: italic; font-weight: 600;
+  color: var(--deckblue); font-size: .95rem;
+  line-height: 1.34; margin: 0 0 3px;
+}
+.now-pubs .when {
+  font-weight: 400; color: var(--muted); font-size: .88rem;
+}
+/* A title, not a headline: it is set at the same size as the block below
+   but has to survive being 130 characters long. */
+.now-pubs h3 { line-height: 1.34; }
+.now-pubs p { color: var(--muted); font-size: .93rem; }
+
+/* The award marker follows a BLOCK here, where on the publications page
+   it follows an inline span, so it lands on its own line rather than
+   beside the title. That is the better arrangement for titles this long,
+   and it means the 11px inline nudge is now a stray indent: a marker
+   starting a line sits on the line's left edge. */
+.now-pubs .mark { margin: 7px 0 0; }
+
+/* The way out of a selected list has to be visible, or "selected" reads
+   as "all". */
+p.more { margin: 22px 0 0; font-size: .95rem; }
 
 /* NOTHING FOLLOWS THE CURRENT BLOCK ON THE HOME PAGE. A `.ways` grid of
    four link blocks lived here and was removed with nothing in its place
@@ -434,11 +550,18 @@ ul.pubs > li:first-child { border-top: none; }
    scrolling for the whole document [measured before the rule was added].
 
    Underlined with a border rather than text-decoration so the rule sits
-   clear of the descenders in a string full of slashes and digits. */
+   clear of the descenders in a string full of slashes and digits.
+
+   THE BORDER IS NOW VISIBLE AT REST, at 35% alpha. It was transparent
+   until the WCAG 1.4.1 pass, which made this the worst measured case on
+   the site: a muted link sitting on muted text is 1.00:1, the identical
+   colour, so nothing whatsoever distinguished it. The DOI is a block of
+   its own, so position argues it is identifiable, and the cost of making
+   that explicit is one value. */
 .doi { display: block; margin-top: 4px; font-size: .87rem;
   overflow-wrap: anywhere; }
 .doi a { color: var(--muted); text-decoration: none;
-  border-bottom: 1px solid transparent; }
+  border-bottom: 1px solid rgba(91, 115, 134, .35); }
 .doi a:hover, .doi a:focus { color: var(--rpired); text-decoration: none;
   border-bottom-color: var(--rpired); }
 
