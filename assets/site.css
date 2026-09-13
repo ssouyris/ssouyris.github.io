@@ -219,9 +219,22 @@ em { font-style: italic; }
   display: flex; align-items: center; justify-content: space-between;
   gap: 20px; flex-wrap: wrap;
 }
+/* THE BRAND IS THE DOMAIN, IN LOWERCASE. It was uppercase for one
+   round, matching the social card's top band, and Sebastián asked for
+   lowercase instead.
+
+   The tracking came down with the case. The card's 0.136em is right for
+   capitals, which need air between them to stay legible; the same value
+   on lowercase pulls the word apart and reads as a mistake. .02em is
+   enough to keep the domain from looking cramped beside the 4px red
+   rule and no more.
+
+   The size goes back up to 1.06rem: lowercase occupies less width and
+   reads smaller than capitals at the same value. It stays larger than
+   the nav items on the right (.86rem) so the bar still has an anchor. */
 .brand {
   color: #fff; text-decoration: none; font-weight: 600; font-size: 1.06rem;
-  letter-spacing: .01em; padding: 15px 0;
+  letter-spacing: .02em; padding: 15px 0;
 }
 .brand:hover, .brand:focus { color: #fff; opacity: .82; }
 /* THE NEGATIVE MARGIN IS WHAT CENTRES THE CURRENT-PAGE MARKER, and it
