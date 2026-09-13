@@ -22,7 +22,29 @@
   --muted:    #5B7386;
 
   --gutter: 52px;
-  --measure: 1180px;
+
+  /* THE ONE NUMBER THAT SETS THE PAGE'S WIDTH, and it is derived rather
+     than chosen. The nav bar, every section hairline and the footer all
+     take it, so the content column is `--measure` minus two gutters:
+
+         1044 - 2 x 52 = 940
+
+     940 is the hero's width, which is itself forced (see the long note
+     above `.hero`: the bio at a readable 64ch plus a photograph that
+     stays portrait-shaped comes to about 940, and stretching the pair
+     wider opens a hole in the middle).
+
+     It was 1180 until 13 September 2026. The hero was capped at 940
+     while everything else kept the full 1076px content column, so the
+     photograph's right edge stopped 136px short of the nav's last item
+     and of every hairline below it [measured at 1440 and 1600]. Two
+     right edges on one page, 136px apart, is the kind of thing that
+     reads as "the page is too wide" without the cause being obvious.
+     Sebastián saw it and asked for the menu to come left to the photo.
+
+     Change this and the whole site moves together. Do not reintroduce a
+     width on any single block: that is what broke the alignment. */
+  --measure: 1044px;
 }
 
 /* ------------------------------------------------------------
@@ -209,30 +231,31 @@ p.lede { font-size: 1.08rem; max-width: 66ch; }
    distorting it: the image is scaled to fill and the overflow is
    cropped from the bottom, where a portrait has least to lose.
    ------------------------------------------------------------ */
-/* THE HERO IS NARROWER THAN THE PAGE, and that is the only way to
-   close the gap between the prose and the photograph.
+/* THE HERO SETS THE PAGE'S WIDTH, and carries no width of its own.
 
-   The arithmetic is forced. Content width at 1280px is 1076px. The bio
-   is capped at a readable measure (512px at 64ch) and the photograph
-   has to stay roughly portrait-shaped or `cover` starts cropping his
-   shoulders: at 442px tall, its natural width is 297px. Text plus photo
-   is therefore about 830px, and stretching the pair across 1076px left
-   244px of dead air in the middle [measured].
+   The arithmetic runs one way. The bio is capped at a readable measure
+   (509px at 64ch) and the photograph has to stay roughly portrait-shaped
+   or `cover` starts cropping his shoulders: at 442px tall, its natural
+   width is 297px, and it is drawn at 360. Text plus gap plus photo is
+   about 940px, so 940 is what the content column should be, and
+   `--measure` is set to 940 plus two gutters for exactly that reason.
 
-   Widening either one does not fix it. A 70-character measure is at the
-   limit of comfortable reading, and a photograph wide enough to close
-   the distance would be cropped past the point of being a portrait.
+   Stretching the pair wider does not work: at the old 1076px column it
+   left 244px of dead air in the middle [measured], because widening
+   either side is blocked (a 70-character measure is the limit of
+   comfortable reading, and a photograph wide enough to close the
+   distance is no longer a portrait).
 
-   So the hero stops at 940px and sits left, against the same gutter as
-   everything below it. The leftover width becomes a right margin, which
-   reads as a margin, where the same pixels between two elements read as
-   a hole. */
+   The first fix capped THE HERO at 940 and left the rest of the page at
+   1076. That traded a hole in the middle for two right edges 136px
+   apart, which is worse: the photograph stopped short of the nav and of
+   every hairline under it. Setting the page to the hero instead makes
+   one edge for everything. So: no max-width here. */
 .hero {
   display: grid;
   grid-template-columns: 1fr var(--portrait-w, 360px);
   grid-template-rows: auto auto;
   column-gap: 40px;
-  max-width: 940px;
   padding: 48px 0 8px;
 }
 .hero-text { grid-column: 1; grid-row: 1; }
@@ -528,7 +551,11 @@ footer.sitefoot a:hover, footer.sitefoot a:focus {
   :root { --gutter: 24px; }
   .now > article { grid-template-columns: 8.5em 1fr; gap: 20px; }
   :root { --portrait-w: 270px; }
-  .hero { column-gap: 30px; max-width: none; }
+  /* `max-width: none` used to be here, to release the hero's own 940px
+     cap once the viewport was narrower than it. The cap is gone: the
+     page's width is the hero's width now, so there is nothing to
+     release. Only the gap tightens. */
+  .hero { column-gap: 30px; }
   .hero h1 { font-size: 2rem; }
 }
 @media (max-width: 620px) {
