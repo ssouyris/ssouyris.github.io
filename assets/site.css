@@ -23,6 +23,13 @@
 
   --gutter: 52px;
 
+  /* The sticky bar's height, overwritten at runtime by the script in
+     _includes/foot.html with the value it measures. 61px is the
+     desktop height and is what applies if that never runs. Declared
+     here so the fallback lives in one place rather than inside the
+     `var()` call that uses it. */
+  --barclear: 61px;
+
   /* THE ONE NUMBER THAT SETS THE PAGE'S WIDTH, and it is derived rather
      than chosen. The nav bar, every section hairline and the footer all
      take it, so the content column is `--measure` minus two gutters:
@@ -284,7 +291,16 @@ em { font-style: italic; }
    than red. An inset shadow paints inside the link's own box, which is
    navy, and red on navy is 1.99:1 against the 3:1 a state indicator
    wants. White is 10.77:1 and matches the type it sits under. */
-.topbar nav a[aria-current="page"],
+/* MATCHED BY THE ONE-LINE <style> EACH PAGE WRITES IN ITS OWN BODY, by
+   id: `#nav-cv{box-shadow:inset 0 -3px 0 #fff}`. This rule holds the
+   shape so the pages only restate the id.
+
+   It used to read `[aria-current="page"], .is-current`, and NOTHING ON
+   THE SITE SET EITHER [measured]: two selectors that matched zero
+   elements on all five pages while the marker was really being drawn by
+   the per-page blocks. Nothing sets aria-current even now, which is a
+   real gap for a screen reader; adding it needs markup the shared nav
+   include cannot produce on its own. */
 .topbar nav a.is-current {
   box-shadow: inset 0 -3px 0 #fff;
 }
@@ -408,7 +424,7 @@ p.lede { font-size: 1.08rem; max-width: 66ch; }
 .hero p.bio:last-child { margin-bottom: 0; }
 
 .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 0; }
-.chips a, .chips span {
+.chips a {
   border: 1px solid var(--gray); background: #fff; color: var(--deckblue);
   padding: 5px 13px; border-radius: 999px; font-size: .87rem;
   text-decoration: none; font-weight: 600;
@@ -422,7 +438,9 @@ p.lede { font-size: 1.08rem; max-width: 66ch; }
   background: var(--deckblue); border-color: var(--deckblue); color: #fff;
   text-decoration: none;
 }
-.chips span { font-weight: 400; color: var(--muted); }
+/* `.chips span` was here, for a chip that is a label rather than a link.
+   No such chip exists on any page [measured], so the rule is gone. The
+   `.jumps` eyebrow is a sibling of `.chips`, not a child of it. */
 
 /* ------------------------------------------------------------
    THE SECTION INDEX, on the CV page only.
@@ -700,9 +718,8 @@ footer.sitefoot a:hover, footer.sitefoot a:focus {
    Narrow
    ------------------------------------------------------------ */
 @media (max-width: 900px) {
-  :root { --gutter: 24px; }
   .now > article { grid-template-columns: 8.5em 1fr; gap: 20px; }
-  :root { --portrait-w: 270px; }
+  :root { --gutter: 24px; --portrait-w: 270px; }
   /* `max-width: none` used to be here, to release the hero's own 940px
      cap once the viewport was narrower than it. The cap is gone: the
      page's width is the hero's width now, so there is nothing to
