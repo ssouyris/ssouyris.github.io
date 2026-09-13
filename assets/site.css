@@ -224,14 +224,30 @@ em { font-style: italic; }
   letter-spacing: .01em; padding: 15px 0;
 }
 .brand:hover, .brand:focus { color: #fff; opacity: .82; }
-.topbar nav { display: flex; flex-wrap: wrap; }
+/* THE NEGATIVE MARGIN IS WHAT CENTRES THE CURRENT-PAGE MARKER, and it
+   pairs with the padding on `:last-child` below. Read the two together.
+
+   The last item used to carry `padding-right: 0` so that its box ended
+   exactly on the content column's right edge. That kept the TEXT flush,
+   which is right, but it left the item's padding box 15px wider on the
+   left than on the right, and the marker is an inset shadow that spans
+   that box: under CV the white rule ran from 1158 to 1190 while the
+   letters ran from 1173 to 1190, overhanging 15px on one side and 0 on
+   the other [measured].
+
+   So the padding goes back to symmetric and the whole nav is pulled
+   right by the same 15px instead. The text still ends on the content
+   edge, the marker is now centred on it, and the 15px of box that hangs
+   past the edge is navy on navy inside the gutter. */
+.topbar nav { display: flex; flex-wrap: wrap; margin-right: -15px; }
 .topbar nav a {
   color: #fff; text-decoration: none; font-size: .86rem; font-weight: 600;
   letter-spacing: .08em; text-transform: uppercase;
   padding: 17px 15px; border-bottom: 3px solid transparent;
   margin-bottom: -3px;
 }
-.topbar nav a:last-child { padding-right: 0; }
+/* Symmetric, like every other item. See the negative margin above. */
+.topbar nav a:last-child { padding-right: 15px; }
 .topbar nav a:hover, .topbar nav a:focus {
   color: #fff; background: rgba(255,255,255,.09);
 }
@@ -703,7 +719,24 @@ footer.sitefoot a:hover, footer.sitefoot a:focus {
   }
   .topbar .inner { padding-bottom: 4px; }
   .brand { padding-bottom: 8px; }
-  .topbar nav a { padding: 10px 14px 10px 0; }
+  /* The same centring problem as the desktop bar, mirrored. The nav
+     stacks under the brand here and has to start on the gutter, and the
+     old way to get that was `padding-left: 0`, which left every item's
+     box 14px wider on the right than on the left and the marker
+     correspondingly off-centre [measured: 0 left, 14 right].
+
+     Symmetric padding, and the nav is pulled out by that amount on both
+     sides instead, so the first item's text still starts on the gutter
+     and the marker is centred on whatever it marks.
+
+     `:last-child` IS NAMED AGAIN HERE ON PURPOSE. The desktop rule
+     `.topbar nav a:last-child` has higher specificity than
+     `.topbar nav a`, and a media query adds none, so without repeating
+     the selector the last item kept its 15px right padding against 14px
+     everywhere else and the marker under CV came out 14/15 [measured]. */
+  .topbar nav { margin-left: -14px; margin-right: -14px; }
+  .topbar nav a,
+  .topbar nav a:last-child { padding: 10px 14px; }
   td.out, td.crs, td.yr { display: block; width: auto; border: none;
     padding-bottom: 0; }
   table.rows td { padding: 9px 0; }
