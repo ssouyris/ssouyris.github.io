@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Four research areas: energy and sustainability, health systems under stress, media and revenue management, and logistics and scheduling.">
+<meta name="description" content="Four research areas: energy and sustainability, health systems under stress, media and revenue management, and supply chain management, logistics and scheduling.">
 
 <title>Research | Sebastián Souyris</title>
 <style>
@@ -92,10 +92,10 @@ ul.task-list li input[type="checkbox"] {
 
 <!-- og.py: generated, do not edit here -->
 <meta property="og:title" content="Research">
-<meta property="og:description" content="Four research areas: energy and sustainability, health systems under stress, media and revenue management, and logistics and scheduling.">
+<meta property="og:description" content="Four research areas: energy and sustainability, health systems under stress, media and revenue management, and supply chain management, logistics and scheduling.">
 <meta property="og:url" content="https://ssouyris.com/research.html">
 <meta name="twitter:title" content="Research">
-<meta name="twitter:description" content="Four research areas: energy and sustainability, health systems under stress, media and revenue management, and logistics and scheduling.">
+<meta name="twitter:description" content="Four research areas: energy and sustainability, health systems under stress, media and revenue management, and supply chain management, logistics and scheduling.">
 <!-- /og.py -->
 </head>
 
@@ -131,11 +131,11 @@ ul.task-list li input[type="checkbox"] {
 <a class="skip" href="#content">Skip to content</a>
 <div class="topbar">
   <div class="inner">
-    <!-- THE BRAND IS THE DOMAIN, not the name, since 13 September 2026.
-         It matches the band across the top of the social card, which
-         Sebasti&aacute;n asked the site to follow. The name is set large in
-         the hero on the home page and is the <title> of every page, so
-         it is not lost; what the bar carries instead is the address. -->
+    <!-- THE BRAND IS THE NAME, since the evening of 13 September 2026.
+         It read ssouyris.com for part of that day, to match the band
+         across the top of the social card. The card, assets/og-card.png,
+         still carries the domain, so the two no longer match; rebuild it
+         with _design/make-card.py if they should. -->
     <a class="brand" id="nav-home" href="index.html">Sebastián Souyris</a>
     <nav aria-label="Main">
       <a id="nav-research" href="research.html">Research</a>
@@ -247,7 +247,7 @@ ul.task-list li input[type="checkbox"] {
   </section>
 
   <section class="sec" id="logistics">
-    <h2>Logistics and scheduling</h2>
+    <h2>Supply chain management, logistics and scheduling</h2>
     <p class="lede">Robust optimization, branch-and-price and constraint
     programming for technician dispatching under uncertainty, and integer
     programming for national league fixtures.</p>
@@ -296,7 +296,7 @@ ul.task-list li input[type="checkbox"] {
 </footer>
 
 <!-- ============================================================
-     THE ONLY SCRIPT THIS SITE WRITES. Two jobs, no dependency, no
+     THE ONLY SCRIPT THIS SITE WRITES. Three jobs, no dependency, no
      request.
 
      ONE, IT LABELS THE CURRENT PAGE FOR A SCREEN READER. The marker a
@@ -334,11 +334,28 @@ ul.task-list li input[type="checkbox"] {
      catches the case a resize listener misses: a font loading late and
      pushing the nav onto a second line after layout has settled.
 
-     BOTH FAIL SAFE. If the script never runs, the visible marker is
-     unaffected (it is CSS), the aria label is simply absent, and the
+     THREE, IT BUILDS THE EMAIL ADDRESS ON A CLICK, so no page carries it
+     for a harvester to read. The address exists below only as two
+     strings, the part before the @ and the part after, and they are
+     joined into a mail link only when a visitor clicks a link marked
+     data-mail. Every Email link carries data-mail and a fallback href
+     (#contact on cv.html, the section the link sits in). A bot reading
+     the HTML finds a link to a section and no address.
+
+     IT IS ITS OWN FUNCTION, after the first, so the early returns there
+     (no bar, no ResizeObserver) cannot skip it.
+
+     THE FIRST TWO FAIL SAFE. If the script never runs, the visible marker
+     is unaffected (it is CSS), the aria label is simply absent, and the
      --barclear fallback in the CSS (61px, the desktop height) applies,
      so the only cost is a heading landing under the bar at some narrow
-     widths. Nothing on the page depends on this file.
+     widths.
+
+     THE THIRD DOES NOT, ON PURPOSE. With scripts off, an Email link opens
+     its fallback and the address is nowhere on it. The only way to give a
+     scripts-off visitor the address is to publish it, which is what this
+     job exists to avoid. So the Email links are the one thing on the
+     site that depends on this file.
      ============================================================ -->
 <script>
   (function () {
@@ -360,6 +377,17 @@ ul.task-list li input[type="checkbox"] {
     };
     new ResizeObserver(set).observe(bar);
     set();
+  })();
+
+  (function () {
+    var parts = ['souyrs', 'rpi.edu'];
+    var links = document.querySelectorAll('a[data-mail]');
+    for (var i = 0; i < links.length; i++) {
+      links[i].addEventListener('click', function (e) {
+        e.preventDefault();
+        window.location.href = 'mailto:' + parts.join('@');
+      });
+    }
   })();
 </script>
 
