@@ -216,84 +216,27 @@ ul.task-list li input[type="checkbox"] {
     </div>
   </div>
 
-  <!-- SELECTED PUBLICATIONS SITS ABOVE THE CURRENT BLOCK, ON PURPOSE.
-       Until September 2026 the front page named its journals and linked
-       to nothing: 217 words, 15 links, zero citations [measured]. A dean
-       or an editor who read one screen and left had seen an assertion
-       and no evidence.
+  <!-- CURRENT RESEARCH COMES FIRST [Sebastián, 21 September 2026]. Until
+       then the order was the reverse, publications and then this block,
+       so that the page ended on the current work. It now reads bio, what
+       is under way, then the record.
 
-       THE FOUR PAPERS ARE SEBASTIÁN'S CHOICE [21 September 2026]: the
-       four most recent of 2022 to 2024, newest first. The first
-       selection was one paper for each journal the bio names; two of
-       those journals, EJOR and the INFORMS Journal on Applied Analytics,
-       are no longer represented here, and iScience and Scientific
-       Reports are here without being named in the bio.
-
-       WHY ABOVE RATHER THAN BELOW. The page is meant to END on the
-       current block, which is the decision that removed the four
-       navigation cards. Putting the record between the bio and the
-       current work keeps that ending, and it reads in the right order
-       anyway: the sentence, then its evidence, then what is next.
-
-       THE LEFT COLUMN IS THE JOURNAL, not the year. In the block below
-       it the year leads, because a project is placed in time. A paper is
-       placed by where it appeared, so the column reads down as
-       iScience, POM, Operations Research, Scientific Reports, which is
-       the credential doing its own work.
-
-       Titles are exact and unabbreviated: an editor arriving here is
-       checking one against a reference list. Author lists are cut to the
-       coauthors, since the whole page is his. Every DOI on this block is
-       the Crossref-resolved one, the same string publications.html
-       carries; the two have to stay in step. -->
-  <section class="sec">
-    <h2>Selected publications</h2>
-    <div class="now now-pubs">
-      <article>
-        <div class="when"><em>iScience</em>2024</div>
-        <div>
-          <h3>COVID-19 Test-to-Stay Program for K-12 Schools: Opt-In Versus Opt-Out Consent Model</h3>
-          <p>With A. Ivanov, U. K. Mukherjee, S. Bose, S. Seshadri, R. Watkins, A. C. England, J. Suriano and M. E. Ahsen. 27(1), 108770.</p>
-          <span class="doi"><a href="https://doi.org/10.1016/j.isci.2023.108770" target="_blank" rel="noopener">https://doi.org/10.1016/j.isci.2023.108770</a></span>
-        </div>
-      </article>
-      <article>
-        <div class="when"><em>Production and Operations Management</em>2023</div>
-        <div>
-          <h3>Informational value of visual nudges during crises: Improving public health outcomes through social media engagement amid COVID-19</h3>
-          <p>With A. Ivanov, Z. Tacheva, A. Alzaidan and A. C. England. 32, 2400–2419.</p>
-          <span class="doi"><a href="https://doi.org/10.1111/poms.13982" target="_blank" rel="noopener">https://doi.org/10.1111/poms.13982</a></span>
-        </div>
-      </article>
-      <article>
-        <div class="when"><em>Operations Research</em>2023</div>
-        <div>
-          <h3>Scheduling Advertising on Cable Television</h3><span class="mark"><a href="https://www.informs.org/Recognizing-Excellence/Community-Prizes/Revenue-Management-and-Pricing/Revenue-Management-and-Pricing-Practice-Award" target="_blank" rel="noopener">First prize, INFORMS RM&amp;P 2022</a></span>
-          <p>With S. Seshadri and S. Subramanian. 71(6), 2217–2231.</p>
-          <span class="doi"><a href="https://doi.org/10.1287/opre.2022.2430" target="_blank" rel="noopener">https://doi.org/10.1287/opre.2022.2430</a></span>
-        </div>
-      </article>
-      <article>
-        <div class="when"><em>Scientific Reports</em>2022</div>
-        <div>
-          <h3>Detecting and mitigating simultaneous waves of COVID-19 infections</h3>
-          <p>With S. Hao, S. Bose, A. C. England, A. Ivanov, U. K. Mukherjee and S. Seshadri. 12, 16727.</p>
-          <span class="doi"><a href="https://doi.org/10.1038/s41598-022-20224-5" target="_blank" rel="noopener">https://doi.org/10.1038/s41598-022-20224-5</a></span>
-        </div>
-      </article>
-    </div>
-    <p class="more"><a href="publications.html">All publications.</a></p>
-  </section>
-
-  <!-- The one part of the site that goes stale on its own, so it is
+       The one part of the site that goes stale on its own, so it is
        three hand-written entries rather than a generated listing: a
        listing page would need its own JS and CSS and would be the only
-       thing here reaching outside itself. -->
+       thing here reaching outside itself.
+
+       THE GUTTER HOLDS THE FUNDER AND NOTHING ELSE. It carried the year
+       above the funder and the role (PI, Co-PI) beside it until 21
+       September 2026; both came out. The funder link is a bare child of
+       `.when`, with no `<em>` around it, so it takes the weight and
+       colour the year had and sits on the title's baseline. The CV's
+       grants table still has the year, the role and the amount. -->
   <section class="sec">
     <h2>Current research</h2>
     <div class="now">
       <article>
-        <div class="when">2026<em><a href="https://www.fcatalyst.com/university-awards" target="_blank" rel="noopener">FCAT</a> · PI</em></div>
+        <div class="when"><a href="https://www.fcatalyst.com/university-awards" target="_blank" rel="noopener">FCAT</a></div>
         <div>
           <h3>Closing the retirement-savings gap</h3>
           <p>Behavioural heterogeneity meets conversational AI: a
@@ -302,7 +245,7 @@ ul.task-list li input[type="checkbox"] {
         </div>
       </article>
       <article>
-        <div class="when">2025<em><a href="https://www.stevens.edu/craft" target="_blank" rel="noopener">CRAFT</a> · PI</em></div>
+        <div class="when"><a href="https://www.stevens.edu/craft" target="_blank" rel="noopener">CRAFT</a></div>
         <div>
           <h3>Drivers of volatility in energy commodity markets</h3>
           <p>Identifying what moves volatility in energy commodities,
@@ -311,7 +254,7 @@ ul.task-list li input[type="checkbox"] {
         </div>
       </article>
       <article>
-        <div class="when">2025<em><a href="https://fcrc.rpi.edu/" target="_blank" rel="noopener">IBM-RPI FCRC</a> · Co-PI</em></div>
+        <div class="when"><a href="https://fcrc.rpi.edu/" target="_blank" rel="noopener">IBM-RPI FCRC</a></div>
         <div>
           <h3>Hybrid quantum-classic approaches to solve optimization problems</h3>
           <p>A hybrid quantum-classical method for semidefinite
@@ -321,12 +264,77 @@ ul.task-list li input[type="checkbox"] {
       </article>
     </div>
   </section>
-  <!-- THE PAGE ENDS HERE, ON PURPOSE. A four-block `nav.ways` sat below
-       this section with one card per page. It repeated the top bar, which
-       is on every page and already carries the same four destinations,
-       and it was removed with nothing in its place [Sebastián, Sept 2026].
-       The `.ways` rules went out of site.css with it rather than being
-       left as dead CSS; recover both from git history if wanted. -->
+
+  <!-- SELECTED PUBLICATIONS. Until September 2026 the front page named
+       its journals and linked to nothing: 217 words, 15 links, zero
+       citations [measured]. A dean or an editor who read one screen and
+       left had seen an assertion and no evidence.
+
+       THE FOUR PAPERS ARE SEBASTIÁN'S CHOICE [21 September 2026]: the
+       four most recent of 2022 to 2024, newest first. The first
+       selection was one paper for each journal the bio names; two of
+       those journals, EJOR and the INFORMS Journal on Applied Analytics,
+       are no longer represented here, and iScience and Scientific
+       Reports are here without being named in the bio.
+
+       THE LEFT COLUMN LEADS WITH THE JOURNAL and the year sits under it.
+       A paper is placed by where it appeared, so the column reads down
+       as iScience, POM, Operations Research, Scientific Reports, which
+       is the credential doing its own work.
+
+       Titles are exact and unabbreviated: an editor arriving here is
+       checking one against a reference list. Author lists are cut to the
+       coauthors, since the whole page is his.
+
+       THE DOI IS A SHORT LINK AT THE END OF THE "With" LINE [21
+       September 2026]. It was the full address on a line of its own in a
+       `.doi` span, as publications.html still sets it. The visible text
+       is "DOI" four times over, so each link carries an `aria-label`
+       with its own identifier; the label starts with the visible text,
+       which is what WCAG 2.5.3 asks. Every `href` is the
+       Crossref-resolved DOI, the same string publications.html carries;
+       the two have to stay in step. -->
+  <section class="sec">
+    <h2>Selected publications</h2>
+    <div class="now now-pubs">
+      <article>
+        <div class="when"><em>iScience</em>2024</div>
+        <div>
+          <h3>COVID-19 Test-to-Stay Program for K-12 Schools: Opt-In Versus Opt-Out Consent Model</h3>
+          <p>With A. Ivanov, U. K. Mukherjee, S. Bose, S. Seshadri, R. Watkins, A. C. England, J. Suriano and M. E. Ahsen. 27(1), 108770. <a href="https://doi.org/10.1016/j.isci.2023.108770" target="_blank" rel="noopener" aria-label="DOI 10.1016/j.isci.2023.108770">DOI</a></p>
+        </div>
+      </article>
+      <article>
+        <div class="when"><em>Production and Operations Management</em>2023</div>
+        <div>
+          <h3>Informational value of visual nudges during crises: Improving public health outcomes through social media engagement amid COVID-19</h3>
+          <p>With A. Ivanov, Z. Tacheva, A. Alzaidan and A. C. England. 32, 2400–2419. <a href="https://doi.org/10.1111/poms.13982" target="_blank" rel="noopener" aria-label="DOI 10.1111/poms.13982">DOI</a></p>
+        </div>
+      </article>
+      <article>
+        <div class="when"><em>Operations Research</em>2023</div>
+        <div>
+          <h3>Scheduling Advertising on Cable Television</h3><span class="mark"><a href="https://www.informs.org/Recognizing-Excellence/Community-Prizes/Revenue-Management-and-Pricing/Revenue-Management-and-Pricing-Practice-Award" target="_blank" rel="noopener">First prize, INFORMS RM&amp;P 2022</a></span>
+          <p>With S. Seshadri and S. Subramanian. 71(6), 2217–2231. <a href="https://doi.org/10.1287/opre.2022.2430" target="_blank" rel="noopener" aria-label="DOI 10.1287/opre.2022.2430">DOI</a></p>
+        </div>
+      </article>
+      <article>
+        <div class="when"><em>Scientific Reports</em>2022</div>
+        <div>
+          <h3>Detecting and mitigating simultaneous waves of COVID-19 infections</h3>
+          <p>With S. Hao, S. Bose, A. C. England, A. Ivanov, U. K. Mukherjee and S. Seshadri. 12, 16727. <a href="https://doi.org/10.1038/s41598-022-20224-5" target="_blank" rel="noopener" aria-label="DOI 10.1038/s41598-022-20224-5">DOI</a></p>
+        </div>
+      </article>
+    </div>
+    <p class="more"><a href="publications.html">All publications.</a></p>
+  </section>
+  <!-- THE PAGE ENDS HERE, ON PURPOSE. A four-block `nav.ways` sat at the
+       foot of the page with one card per page. It repeated the top bar,
+       which is on every page and already carries the same four
+       destinations, and it was removed with nothing in its place
+       [Sebastián, Sept 2026]. The `.ways` rules went out of site.css
+       with it rather than being left as dead CSS; recover both from git
+       history if wanted. -->
 </div>
 
 </main>

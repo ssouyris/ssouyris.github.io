@@ -518,7 +518,13 @@ section.sec[id] { scroll-margin-top: calc(var(--barclear, 61px) + 18px); }
 
    The first row takes the dark rule and the rest a grey one, so the
    block reads as one table with a head rather than three separate
-   things. */
+   things.
+
+   SINCE 21 SEPTEMBER 2026 THE CURRENT BLOCK'S GUTTER HOLDS THE FUNDER
+   ALONE. The year and the role came out of index.qmd, and the funder
+   link is a bare child of `.when`, so it takes the weight and colour
+   the year had. `.now .when em` below still styles the second gutter
+   line, which only the publications variant uses now. */
 .now { margin-top: 20px; }
 .now > article {
   display: grid; grid-template-columns: 12em 1fr; gap: 30px;
@@ -542,14 +548,13 @@ section.sec[id] { scroll-margin-top: calc(var(--barclear, 61px) + 18px); }
 .now p { margin: 6px 0 0; font-size: .95rem; color: #3d5361; max-width: 66ch; }
 
 /* THE SELECTED-PUBLICATIONS VARIANT. Same rows, one thing inverted: the
-   gutter leads with the journal rather than the year, because a paper is
-   placed by where it appeared and a project is placed in time. Read down
-   the column and it says Operations Research, POM, INFORMS Journal on
-   Applied Analytics, EJOR, which is the front page's argument set as a
-   list.
+   gutter leads with the journal and the year sits under it, because a
+   paper is placed by where it appeared. Read down the column and it says
+   iScience, POM, Operations Research, Scientific Reports, which is the
+   front page's argument set as a list.
 
-   The journal is italic and takes the weight; the year drops to the
-   muted second line the funder occupies in the block below. Journal
+   The journal is italic and takes the weight; the year drops to a muted
+   second line. Journal
    names run long, so this column wraps to two and three lines by design,
    and the tightened line-height keeps a wrap from reading as two
    separate entries. */
@@ -577,8 +582,8 @@ section.sec[id] { scroll-margin-top: calc(var(--barclear, 61px) + 18px); }
    as "all". */
 p.more { margin: 22px 0 0; font-size: .95rem; }
 
-/* NOTHING FOLLOWS THE CURRENT BLOCK ON THE HOME PAGE. A `.ways` grid of
-   four link blocks lived here and was removed with nothing in its place
+/* NOTHING FOLLOWS THE TWO `.now` BLOCKS ON THE HOME PAGE. A `.ways` grid
+   of four link blocks lived here and was removed with nothing in its place
    [Sebastián, Sept 2026]: it restated the top bar's four destinations one
    screen lower. Its rules are gone rather than orphaned; `git log -p
    assets/site.css` has them if the decision is revisited. */
@@ -733,8 +738,8 @@ footer.sitefoot a:hover, footer.sitefoot a:focus {
   .hero h1 { font-size: 2rem; }
 }
 @media (max-width: 620px) {
-  /* The year column has nowhere to sit at this width, so the row
-     becomes two stacked blocks and the year leads. */
+  /* The gutter column has nowhere to sit at this width, so the row
+     becomes two stacked blocks and the gutter's content leads. */
   .now > article { grid-template-columns: 1fr; gap: 6px; }
   /* The box keeps its shape and moves to its own line, rather than
      stretching the width of the column or forcing the title to wrap
