@@ -478,6 +478,18 @@ p.lede { font-size: 1.08rem; max-width: 66ch; }
   margin-right: 4px;
 }
 .jumps .chips { margin: 0; }
+/* The CV page opens on its index, with no page head above it, so there
+   is nothing for the hairline to separate. The 26px margin and 14px
+   padding stay, and together they are the 40px `.pagehead` put above a
+   page's first line. */
+.jumps.lead { border-top: none; }
+
+/* In the document, off the screen. The CV page's h1 uses it: the visible
+   heading was removed on 21 September 2026 and the outline keeps it. */
+.vh {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
 
 /* THE BAR IS STICKY, so a heading jumped to lands underneath it without
    this. --barclear is the bar's measured height, published by the seven
